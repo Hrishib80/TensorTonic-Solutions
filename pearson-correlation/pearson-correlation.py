@@ -8,5 +8,7 @@ def pearson_correlation(X):
     X = np.array(X)
     if(X.ndim < 2):
         return None
-    X = X.T
-    return np.corrcoef(X)
+    cov = np.cov(X, ddof = 1, rowvar = False)
+    stds = np.std(X, ddof = 1, axis = 0).reshape(-1, 1)
+    prod_stds = np.matmul(stds, stds.T)
+    return (cov/prod_stds)
